@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+  <head>
+    <meta charset="UTF-8">
+    <title>zues</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="../../static/css/font.css">
+    <link rel="stylesheet" href="../../static/css/xadmin.css">
+    <script type="text/javascript" src="../../static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../static/js/xadmin.js"></script>
+  </head>
+  <body>
+    <div class="layui-fluid">
+      <div class="layui-row">
+          {% for scripts in script_info %}
+          <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+              <span class="x-red">*脚本ID</span></label>
+            <div class="layui-input-inline">
+              <input type="text" readonly="true" id="script_id" name="script_id" value="{{ scripts.script_id }}" required="" lay-verify="required" autocomplete="off" class="layui-input"></div>
+          </div>
+          <div class="layui-form-item">
+            <label for="phone" class="layui-form-label">
+              <span class="x-red">*脚本名称</span></label>
+            <div class="layui-input-inline">
+              <input type="text" readonly="true" id="script_name" name="script_name" value="{{ scripts.script_name }}" required="" lay-verify="phone" autocomplete="off" class="layui-input"></div>
+          </div>
+          <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+              <span class="x-red">*脚本语言</span></label>
+            <div class="layui-input-inline">
+              {% if scripts.script_langue == 1 %}
+              <input type="text" readonly="true" id="script_langue" name="script_langue" value="SHELL" required="" lay-verify="required" autocomplete="off" class="layui-input">
+              {% elif scripts.script_langue == 2 %}
+              <input type="text" readonly="true" id="script_langue" name="script_langue" value="PYTHON" required="" lay-verify="required" autocomplete="off" class="layui-input">
+              {% endif %}
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+              <span class="x-red">*脚本类型</span></label>
+            <div class="layui-input-inline">
+              {% if scripts.script_type == 1 %}
+              <input type="text" readonly="true" id="script_type" name="script_type" value="归档" required="" lay-verify="required" autocomplete="off" class="layui-input">
+              {% elif scripts.script_type == 2 %}
+               <input type="text" readonly="true" id="script_type" name="script_type" value="ETL" required="" lay-verify="required" autocomplete="off" class="layui-input">
+              {% elif scripts.script_type == 3 %}
+              <input type="text" readonly="true" id="script_type" name="script_type" value="备份" required="" lay-verify="required" autocomplete="off" class="layui-input">
+               {% elif scripts.script_type == 4 %}
+              <input type="text" readonly="true" id="script_type" name="script_type" value="工具" required="" lay-verify="required" autocomplete="off" class="layui-input">
+              {% endif %}
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label for="phone" class="layui-form-label">
+              <span class="x-red">*脚本环境</span></label>
+            <div class="layui-input-inline">
+                {% if scripts.script_env == 1 %}
+              <input type="text" readonly="true" id="script_env" name="script_env" value="生产环境" required="" lay-verify="phone" autocomplete="off" class="layui-input">
+                {% elif scripts.script_env == 2 %}
+                <input type="text" readonly="true" id="script_env" name="script_env" value="预发布环境" required="" lay-verify="phone" autocomplete="off" class="layui-input">
+                 {% elif scripts.script_env == 3 %}
+                 <input type="text" readonly="true" id="script_env" name="script_env" value="测试环境" required="" lay-verify="phone" autocomplete="off" class="layui-input">
+                 {% endif %}
+          </div>
+          </div>
+          <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+              <span class="x-red">*脚本路径</span></label>
+            <div class="layui-input-inline">
+              <input type="text" readonly="true" id="script_path" name="script_path" value="{{ scripts.script_path }}" required="" lay-verify="required" autocomplete="off" class="layui-input"></div>
+          </div>
+           <div class="layui-form-item">
+            <label for="phone" class="layui-form-label">
+              <span class="x-red">*创建时间</span></label>
+            <div class="layui-input-inline">
+              <input type="text" readonly="true" id="create_time" name="create_time" value="{{ scripts.create_time }}" required="" lay-verify="phone" autocomplete="off" class="layui-input"></div>
+          </div>
+          <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+              <span class="x-red">*修改时间</span></label>
+            <div class="layui-input-inline">
+              <input type="text" readonly="true" id="update_time" name="update_time" value="{{ scripts.update_time }}" required="" lay-verify="required" autocomplete="off" class="layui-input"></div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <label for="desc" class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+              <textarea placeholder="请输入内容" id="desc" name="desc" class="layui-textarea">{{ scripts.script_desc }}</textarea>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>zues</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />-->
+    <link rel="stylesheet" href="../../static/css/font.css">
+    <link rel="stylesheet" href="../../static/css/xadmin.css">
+    <script type="text/javascript" src="../../static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../static/js/xadmin.js"></script>
+  </head>
+
+  <body>
+  <div class="layui-fluid">
+      <div class="layui-row">
+        <div class="layui-card">
+          <form class="layui-form" method="POST" id="upload" enctype="multipart/form-data">
+              {% csrf_token %}
+            <div class="layui-card-body">
+              <label for="script_name" class="layui-form-label">
+                <span class="x-red">*</span>脚本名称</label>
+              <div class="layui-input-inline">
+                <input type="text" id="script_name" name="script_name" required lay-verify="required" autocomplete="off" class="layui-input" value={{script_name}}>
+              </div>
+            </div>
+            <div class="layui-card-body">
+              <label for="script_langue" class="layui-form-label">
+                <span class="x-red">*</span>脚本语言</label>
+              <div class="layui-input-inline">
+                <select id="script_langue" name="script_langue" class="valid">
+                  <option value="SHELL">SHELL</option>
+                  <option value="PYTHON">PYTHON</option></select>
+              </div>
+            </div>
+            <div class="layui-card-body">
+              <label for="script_type" class="layui-form-label">
+                <span class="x-red">*</span>脚本类型</label>
+              <div class="layui-input-inline">
+                <select name="script_type" class="valid">
+                  <option value="ARCHIVE">归档</option>
+                  <option value="ETL">ETL</option>
+                  <option value="BACKUP">备份</option>
+                  <option value="TOOL">工具</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-card-body">
+              <label for="script_env" class="layui-form-label">
+                <span class="x-red">*</span>脚本环境</label>
+              <div class="layui-input-inline">
+                <select name="script_env" class="valid">
+                  <option value="PRO_ENV">生产环境</option>
+                  <option value="PRE_ENV">预发布环境</option>
+                  <option value="TEST_ENV">测试环境</option></select>
+              </div>
+            </div>
+              <div class="layui-card-body ">
+                <label for="desc" class="layui-form-label">脚本上传</label>
+                <div class="layui-upload">
+                  <!--<button type="button" class="layui-btn layui-btn-normal" id="file">选择文件</button>-->
+                    <input type="file" id="file" name="file" value="选择文件"/>
+            </div> </div>
+            <div class="layui-card-body ">
+              <label for="desc" class="layui-form-label">脚本描述</label>
+              <div class="layui-input-block">
+                <textarea placeholder="请输入内容" id="desc" name="desc" class="layui-textarea" style="width:500px; height:100px" ></textarea>
+              </div>
+            </div>
+            <div class="layui-card-body">
+                <button class="layui-btn" type="submit"  id="script_add_form"  lay-filter="script_add_form" >增加</button>
+                <label for="L_repass" class="layui-form-label"></label>
+                <button type="reset" class="layui-btn" lay-submit="">重置</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+        layui.use('form', function(){
+            var form = layui.form;
+            //fromDate = new FormData(form);
+            var $ = layui.jquery;
+            var layer = layui.layer;
+
+            //监听提交
+            form.on('submit(script_add_form)', function(data){
+                  layer.msg(JSON.stringify(data.field));
+                  $.ajax({
+                      type: "post",
+                      url: "{% url 'register_script' %}",
+                      data: $('#script_add_form').serialize(),//data.field,//
+                      contentType: 'application/json',
+                });
+            return false;//禁止跳转，否则会提交两次，且页面会刷新
+            });
+    });
+    </script>
+  </body>
+</html>
