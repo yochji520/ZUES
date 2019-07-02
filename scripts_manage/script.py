@@ -1,10 +1,11 @@
 import time
-from common.logs import LogtoLog
 from scripts_manage.models import scripts_info
+from common.logs import LogtoLog
 import random
 
 
 class Script(object):
+
     def __init__(self, **scriptdict):
         self.scriptdict = scriptdict
 
@@ -24,17 +25,16 @@ class Script(object):
         script.script_desc = scriptdict['script_desc']
         script.create_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         script.update_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
-        log = LogtoLog().getlog()
+        logging = LogtoLog().getlog()
         try:
             script.save()
         except Exception as err:
-            log.error("数据库操作异常", err)
+            logging.error("数据库操作异常", err)
         except ConnectionError as err:
-            log.error("数据库连接异常，请查看数据库服务是否正常运行或者网络是否存在异常", err)
+            logging.error("数据库连接异常，请查看数据库服务是否正常运行或者网络是否存在异常", err)
 
     @classmethod
     def scripts_list(self):
-        from common.logs import LogtoLog
         logging = LogtoLog().getlog()
         try:
             script_list = scripts_info.objects.all().order_by('script_id').values()
@@ -45,7 +45,6 @@ class Script(object):
 
     @classmethod
     def script_details(self, scriptid):
-        from common.logs import LogtoLog
         logging = LogtoLog().getlog()
         try:
             script_info = scripts_info.objects.filter(script_id=scriptid)
@@ -61,7 +60,6 @@ class Script(object):
         :param scriptid:待删除的脚本信息script_id
         :return:
         """
-        from common.logs import LogtoLog
         logging = LogtoLog().getlog()
         try:
             del_res = scripts_info.objects.filter(script_id=scriptid).delete()
